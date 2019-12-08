@@ -1,0 +1,83 @@
+#include "Encrypter.h"
+
+Encrypter::Encrypter()
+{
+	// set shift to 3
+	shift = 3;
+}
+
+string Encrypter::encrypt(string str)
+{
+	string out = "";
+
+	// traverse all characters in given string
+	for (int i = 0; i<str.length(); i++)
+	{
+		char ch = str[i];
+		// encrypt upper case character
+		if (ch >= 'A' && ch <= 'Z')
+		{
+			ch = ch + shift;
+
+			if (ch > 'Z')
+			{
+				ch = ch - 'Z' + 'A' - 1;
+			}
+
+			out += ch;
+		}
+		// decrypt lower case character
+		else if (ch >= 'a' && ch <= 'z')
+		{
+			ch = ch + shift;
+
+			if (ch > 'z')
+			{
+				ch = ch - 'z' + 'a' - 1;
+			}
+
+			out += ch;
+		}
+	}
+
+	// return encrypted string
+	return out;
+}
+
+string Encrypter::decrypt(string str)
+{
+	string out = "";
+
+	// traverse all characters in given string
+	for (int i = 0; i<str.length(); i++)
+	{
+		char ch = str[i];
+		// decrypt upper case character
+		if (ch >= 'A' && ch <= 'Z')
+		{
+			ch = ch - shift;
+
+			if (ch < 'A')
+			{
+				ch = ch + 'Z' - 'A' + 1;
+			}
+
+			out += ch;
+		}
+		// decrypt lower case character
+		else if(ch >= 'a' && ch <= 'z')
+		{
+			ch = ch - shift;
+			
+			if (ch < 'a')
+			{
+				ch = ch + 'z' - 'a' + 1;
+			}
+
+			out += ch;
+		}
+	}
+
+	// return encrypted string
+	return out;
+}

@@ -1,0 +1,16 @@
+#pragma once
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Encrypter
+{
+private:
+	int shift;
+
+public:
+	Encrypter();
+	string encrypt(string str);
+	string decrypt(string str);
+};
+

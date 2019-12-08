@@ -1,0 +1,138 @@
+#include "Encrypter.h"
+#include <vector>
+#include <fstream>
+
+int main()
+{
+	// object of Encrypter class
+	Encrypter encrypter;
+
+	// vector object to store data read from file
+	vector<string> lines;
+
+	int choice = 0;
+
+	while (choice != 3)
+	{
+		cout << "1. Encrypt a file" << endl;
+		cout << "2. Decrypt a file" << endl;
+		cout << "3. Exit" << endl;
+		cin >> choice;
+		cin.ignore();
+
+		if (choice == 1)
+		{
+			// clear list
+			lines.clear();
+
+			// get file name from user
+			string filename;
+			cout << "Enter full path file name: ";
+			getline(cin, filename);
+
+			// open file
+			ifstream inFile(filename);
+
+			// if file opened
+			if (inFile.is_open())
+			{
+				// read till end of file
+				while (!inFile.eof())
+				{
+					string line;
+					// read line
+					getline(inFile, line);
+					// add line to vector
+					lines.push_back(line);
+				}
+
+				// close file 
+				inFile.close();
+
+				// open same file again to write encrypted data
+				ofstream outFile(filename);
+
+				// loop through all data read in vector from file
+				for (int i = 0; i < lines.size(); i++)
+				{
+					// call function to encrypt line and write into file
+					outFile << encrypter.encrypt(lines[i]);					
+				}
+
+				// save file
+				outFile.flush();
+				// close file
+				outFile.close();
+
+				// print success message
+				cout << "Data has been encrypted and stored in '" << filename << "'" << endl;
+			}
+			else
+			{
+				cout << "Can't open '" << filename << "'" << endl;
+			}
+		}
+		else if (choice == 2)
+		{
+			// clear list
+			lines.clear();
+
+			// get file name from user
+			string filename;
+			cout << "Enter full path file name: ";
+			getline(cin, filename);
+			// open file
+			ifstream inFile(filename);
+
+			// if file opened
+			if (inFile.is_open())
+			{
+				// read till end of file
+				while (!inFile.eof())
+				{
+					string line;
+					// read line
+					getline(inFile, line);
+					// add line to vector
+					lines.push_back(line);
+				}
+
+				// close file 
+				inFile.close();
+
+				// open same file again to write decrypted data
+				ofstream outFile(filename);
+
+				// loop through all data read in vector from file
+				for (int i = 0; i < lines.size(); i++)
+				{
+					// call function to decrypt line and write into file
+					outFile << encrypter.decrypt(lines[i]);
+				}
+
+				// save file
+				outFile.flush();
+				// close file
+				outFile.close();
+
+				// print success message
+				cout << "Data has been decrypted and stored in '" << filename << "'" << endl;
+			}
+			else
+			{
+				cout << "Can't open '" << filename << "'" << endl;
+			}
+		}
+		else if (choice == 3)
+		{
+
+		}
+		else
+		{
+			cout << "Invalid Selection!" << endl;
+		}
+		cout << endl;
+	}
+
+	return 0;
+}
